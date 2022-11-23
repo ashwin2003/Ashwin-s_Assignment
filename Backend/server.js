@@ -6,8 +6,6 @@ const path = require("path");
 
 const app = express();
 
-require("dotenv").config();
-
 connect();
 
 app.use(express.json());
