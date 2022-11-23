@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const connect = require("./config/database");
 const Case = require("./Model/Case");
+const path = require("path");
 
 const app = express();
 
@@ -25,20 +26,6 @@ app.get("/cases", async (req, res) => {
 });
 
 app.post("/add", async (req, res) => {
-  // http://localhost:3001/add
-  // const data = {
-  //   caseNo: "1",
-  //   branch: "Jaipur",
-  //   reportingMethod: "online",
-  //   // Date: "",
-  //   category: "Employment",
-  //   subCategory: "Query",
-  //   nature: "Health",
-  //   caseManager: "Quency",
-  //   caseReporter: "Tanner",
-  //   // caseStatus: "",
-  // };
-
   const data = req.body;
 
   try {
@@ -77,6 +64,12 @@ app.delete("/:caseNo", async (req, res) => {
   } catch (error) {
     return res.status(404).send(error);
   }
+});
+
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
 });
 
 module.exports = app;
